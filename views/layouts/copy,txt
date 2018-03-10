@@ -1,0 +1,46 @@
+<div class="top_bg">
+    <div class="container">
+        <div class="header_top">
+            <div class="top_left">
+                <a><h2><span>...ubid, ubuy, uclose it</span></h2></a>
+            </div>
+            <div class="top_right">
+                <ul>
+                    <li><a href="index.php">Inicio</a></li>
+                    |
+                    <li><a href="index.php?r=site/about">Acerca de...</a></li>
+                    |
+                    <li><a href="index.php?r=site/contact">Contactanos</a></li>
+                    |
+                    <li class="login">
+                        <div id="loginContainer">
+                            <?php
+                            echo Yii::$app->user->isGuest ? (
+                            '<a href="index.php?r=site/login"><span class="glyphicon glyphicon-log-in"> Login</span></a>'
+                            ) : (
+                                '<span>' .
+                                Html::beginForm(['site/logout'], 'post')
+                                . '<span class="glyphicon glyphicon-log-out">' . Html::submitButton('Logout (' . Yii::$app->user->identity->nom_user . ')',
+                                    ['style' => 'color:white; background-color:transparent; border:none; font-size: 15px; height: 12px;',]
+                                ) . '</span>'
+                                . Html::endForm()
+                                . '</span>'
+                            );
+                            ?>
+                        </div>
+                    </li>
+                    <?php
+                    if (!Yii::$app->user->isGuest) {
+                        echo '|';
+                        echo '<li><a href="index.php?r=usuario/perfil"><span>Perfil</span></a></li>';
+                        echo '<li ><a href="index.php?r=notificaciones/index"><span id="notificacionesNuevas" class=" btn-warning badge">' . count(Notificaciones::findAll(['usuario_id' => Yii::$app->user->id, 'nuevo' => true])) . '</span></a></li>';
+                    }
+                    ?>
+                </ul>
+
+            </div>
+
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
